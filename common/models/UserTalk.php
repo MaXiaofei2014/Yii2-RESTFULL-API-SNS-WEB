@@ -87,7 +87,6 @@ class UserTalk extends \yii\db\ActiveRecord
     }
     public function getlinks()
     {
-
         return [
             Link::REL_SELF => Url::to(['user-talk/view', 'id' => $this->id,'expand'=>'user,media,click,Links'], true),
         ];
