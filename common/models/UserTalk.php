@@ -76,7 +76,7 @@ class UserTalk extends \yii\db\ActiveRecord
          $media=$this->hasMany(TalkMedia::className(),['talk_id'=>'id']);
          return $media;
     }
-    public function getclick()
+    public function getclickuser()
     {
 
         $click= $this->hasMany(User::className(), ['id' => 'click_user_id'])
@@ -107,7 +107,7 @@ class UserTalk extends \yii\db\ActiveRecord
 
     public function extraFields()
     {
-        return ['user','useralbum','media','click','Links','countclick'];
+        return ['user','useralbum','media','clickuser','Links','countclick'];
     }
 
 }
