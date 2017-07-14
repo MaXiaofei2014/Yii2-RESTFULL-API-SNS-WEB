@@ -20,6 +20,7 @@ class UserTalkController extends ActiveController
 
     public function actionIndex()
     {
+
         $query=UserTalk::find();
         $provider = new ActiveDataProvider([
             'query' =>$query,
@@ -38,9 +39,10 @@ class UserTalkController extends ActiveController
 
     public function actionView()
     {
-      $param=\Yii::$app->request->get();
-      $info=UserTalk::findOne($param['id']);
-      return $info;
+        $param=\Yii::$app->request->get();
+        $info=UserTalk::findOne($param['id']);
+
+        return $info;
     }
 }
 
