@@ -66,16 +66,30 @@ class UserTalk extends \yii\db\ActiveRecord
     }
 
 
+    /**
+     * @return \yii\db\ActiveQuery
+     * get user for the talk
+     */
+
     public function getuser()
     {
         return $this->hasOne(User::className(),['id'=>'user_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     * get media info for the talk
+     */
     public function getmedia()
     {
          $media=$this->hasMany(TalkMedia::className(),['talk_id'=>'id']);
          return $media;
     }
+
+    /**
+     * @return $this
+     * get all  clik  the click users list
+     */
     public function getclickuser()
     {
 
@@ -85,6 +99,10 @@ class UserTalk extends \yii\db\ActiveRecord
 
     }
 
+    /**
+     * get click number
+     * @return int|string
+     */
     public function getcountclick(){
         $redis=\Yii::$app->redis;
         $count=$redis->get('talk_click:'.$this->id);
@@ -97,6 +115,11 @@ class UserTalk extends \yii\db\ActiveRecord
         }
         return $count;
     }
+
+    /**
+     * get talk  links
+     * @return array
+     */
     public function getlinks()
     {
 
@@ -105,6 +128,10 @@ class UserTalk extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * extra fields
+     * @return array
+     */
     public function extraFields()
     {
         return ['user','useralbum','media','clickuser','Links','countclick'];
