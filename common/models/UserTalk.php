@@ -80,13 +80,26 @@ class UserTalk extends \yii\db\ActiveRecord
     {
 
         $click= $this->hasMany(User::className(), ['id' => 'click_user_id'])
-            ->viaTable('yii_talk_click', ['talk_id' => 'id']);
-
+            ->viaTable('{{%talk_click}}', ['talk_id' => 'id']);
         return $click;
 
     }
+
+    public function getcountclick(){
+        $redis=\Yii::$app->redis;
+        $count=$redis->get('talk_click:'.$this->id);
+        if ($count>0){
+            return $count;
+        }
+        else{
+            $count=TalkClick::find()->where(['talk_id'=>$this->id])->count();
+            $redis->set('talk_click:'.$this->id,$count);
+        }
+        return $count;
+    }
     public function getlinks()
     {
+
         return [
             Link::REL_SELF => Url::to(['user-talk/view', 'id' => $this->id,'expand'=>'user,media,click,Links'], true),
         ];
@@ -94,7 +107,7 @@ class UserTalk extends \yii\db\ActiveRecord
 
     public function extraFields()
     {
-        return ['user','useralbum','media','click','Links'];
+        return ['user','useralbum','media','click','Links','countclick'];
     }
 
 }
