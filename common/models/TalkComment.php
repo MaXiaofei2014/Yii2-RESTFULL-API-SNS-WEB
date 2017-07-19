@@ -72,7 +72,6 @@ class TalkComment extends \yii\db\ActiveRecord
         return $_list;
 
     }
-
     /***
      * get the comment user
      */
