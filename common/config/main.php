@@ -20,7 +20,7 @@ return [
             'dateFormat' => 'yyyy-MM-dd',
             'datetimeFormat' => 'yyyy-MM-dd HH:mm:ss',
         ],
-        
+
     ],
     //这是自己加入的
     'bootstrap' => ['debug'],

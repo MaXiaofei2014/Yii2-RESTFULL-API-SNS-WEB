@@ -26,6 +26,7 @@ class UserTalk extends \yii\db\ActiveRecord
     const TALK_MEDIA_PICTURE='picture';
     const TALK_MEDIA_SOUND='mp3';
     const TALK_MEDIA_VIDEO='video';
+
     /**
      * @inheritdoc
      */
@@ -75,7 +76,6 @@ class UserTalk extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(),['id'=>'user_id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      * get media info for the talk
@@ -103,7 +103,8 @@ class UserTalk extends \yii\db\ActiveRecord
      * get click number
      * @return int|string
      */
-    public function getcountclick(){
+    public function getcountclick()
+    {
         $redis=\Yii::$app->redis;
         $count=$redis->get('talk_click:'.$this->id);
         if ($count>0){
@@ -115,7 +116,13 @@ class UserTalk extends \yii\db\ActiveRecord
         }
         return $count;
     }
+    public function getcomment()
+    {
 
+       $comment=new \common\models\TalkComment;
+       $list=$comment->getCommonList($this->id);
+        return $list;
+    }
     /**
      * get talk  links
      * @return array
@@ -134,7 +141,7 @@ class UserTalk extends \yii\db\ActiveRecord
      */
     public function extraFields()
     {
-        return ['user','useralbum','media','clickuser','Links','countclick'];
+        return ['user','useralbum','media','clickuser','Links','countclick','comment'];
     }
 
 }
