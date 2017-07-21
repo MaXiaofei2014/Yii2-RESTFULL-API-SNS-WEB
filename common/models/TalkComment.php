@@ -54,7 +54,7 @@ class TalkComment extends \yii\db\ActiveRecord
     }
 
     /**
-     * 获取某条说说的评论
+     * get the comment for a talk
      *
      * @param $talk_id int 说说ID
      * @return static[]
@@ -69,20 +69,20 @@ class TalkComment extends \yii\db\ActiveRecord
             $data['parent_user']=$value->parentuser;
             $list[]=$data;
         }
-        return $_list;
-
+        return $list;
     }
     /***
      * get the comment user
      */
-    public function getuser(){
+    public function getuser()
+    {
         return  $this->hasOne(\api\models\User::className(),['id'=>'user_id'])->select('username,header_img');
     }
-
     /***
      * get the reply comment of user
      */
-    public function getparentuser(){
+    public function getparentuser()
+    {
         return $this->hasOne(\api\models\User::className(),['id'=>'parent_id'])->select('username,header_img');
     }
     /**
