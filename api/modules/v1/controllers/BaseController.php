@@ -1,13 +1,12 @@
 <?php
-
 namespace api\modules\v1\controllers;
 
-use yii\web\Controller;
+use yii\rest\ActiveController;
 
 /**
  * Default controller for the `v1` module
  */
-class BaseController extends Controller
+class BaseController extends ActiveController
 {
     /**
      * Renders the index view for the module

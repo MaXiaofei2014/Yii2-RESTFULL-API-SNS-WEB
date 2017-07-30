@@ -59,7 +59,17 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/user-talk','v1/user'],
+                    'controller' => ['v1/user-talk'],
+                    'extraPatterns' => [
+                        'GET another' => 'another',//增加一个额外的方法
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/upload'],
+                    'extraPatterns' => [
+                        'GET another' => 'another',//增加一个额外的方法
+                    ],
                 ],
             ],
         ]
