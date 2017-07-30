@@ -13,6 +13,13 @@ use Yii;
  */
 class ShowAccess extends \yii\db\ActiveRecord
 {
+    /***
+     * 访问权限常量
+     */
+    const SHOW_ACCESS_SELF =1;
+    const SHOW_ACCESS_CLASSMATE =1;
+    const SHOW_ACCESS_SCHOOL =1;
+    const SHOW_ACCESS_ALL =1;
     /**
      * @inheritdoc
      */
@@ -27,7 +34,7 @@ class ShowAccess extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['key'], 'required'],
+            [['key','value'], 'required'],
             [['key'], 'integer'],
             [['value'], 'string', 'max' => 255],
         ];

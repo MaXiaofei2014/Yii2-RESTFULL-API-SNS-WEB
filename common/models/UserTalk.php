@@ -3,6 +3,7 @@
 namespace common\models;
 use api\models\User;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\web\Link;
 
 use yii\helpers\Url;
@@ -21,7 +22,15 @@ use yii\helpers\Url;
  */
 class UserTalk extends \yii\db\ActiveRecord
 {
+    /***
+     * status
+     */
     const ACTIVE_STATUS=1;
+    const DELETE_STATUS=2;
+    const HIDDEN_STATUS=3;
+    /**
+     * media type
+    */
     const TALK_MEDIA_NONE='none';
     const TALK_MEDIA_PICTURE='picture';
     const TALK_MEDIA_SOUND='mp3';
@@ -35,14 +44,23 @@ class UserTalk extends \yii\db\ActiveRecord
         return '{{%user_talk}}';
     }
 
+    public function behaviors()
+    {
+        return [
+           TimestampBehavior::className(),
+        ];
+    }
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'talk_media'], 'required'],
+            [['user_id', 'talk_content'], 'required'],
             [['id', 'user_id', 'show_access', 'status', 'created_at', 'updated_at'], 'integer'],
+            ['talk_media','default','value'=>TalkMedia::MEDIA_TYPE_NONE],
+            ['show_access','default','value'=>ShowAccess::SHOW_ACCESS_ALL],
+            ['status','default','value'=>self::HIDDEN_STATUS],
             [['talk_content', 'likes'], 'string'],
             [['talk_media'], 'string', 'max' => 32],
         ];
@@ -144,4 +162,14 @@ class UserTalk extends \yii\db\ActiveRecord
         return ['user','useralbum','media','clickuser','Links','countclick','comment'];
     }
 
+    /**
+     * 删除其他有关 如 评论 点赞人
+     *
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        //删除评论
+        TalkComment::deleteAll(['talk_id'=>$this->id]);
+    }
 }

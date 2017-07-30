@@ -18,6 +18,10 @@ class TalkMedia extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    const MEDIA_TYPE_NONE= 'none';
+    const MEDIA_TYPE_MP3 ='mp3';
+    const MEDIA_TYPE_PICTURE="picture";
+    const MEDIA_TYPE_VIDEO="video";
     public static function tableName()
     {
         return '{{%talk_media}}';
